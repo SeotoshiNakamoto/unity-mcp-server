@@ -339,6 +339,16 @@ namespace UnityMCPServer.Core
                     }
                 }
             }
+            catch (IOException)
+            {
+                // Expected when MCP client (e.g. Claude Code) disconnects normally
+                McpLogger.Log("Client connection closed");
+            }
+            catch (SocketException)
+            {
+                // Expected when MCP client disconnects normally
+                McpLogger.Log("Client connection closed");
+            }
             catch (Exception ex)
             {
                 if (!cancellationToken.IsCancellationRequested)
